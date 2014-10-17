@@ -7,7 +7,7 @@ import texture.Texture;
 import texture.TextureLoader;
 import static org.lwjgl.opengl.GL11.*;
 
-public class Player {
+public class OldStylePlayer {
 	private int x;
 	private int y;
 	private int z;
@@ -17,7 +17,7 @@ public class Player {
 	private double zspeed = 0;
 	private double gravity = 0.1;
 	
-	public Player() {
+	public OldStylePlayer() {
 		this.texture = TextureLoader.loadTextureFromFile("res/man.png", false, 1);
 	}
 	
@@ -25,8 +25,8 @@ public class Player {
 		return x + "; " + z + "; " + y;
 	}
 	
-	public static Player deserialize(String position) {
-		Player player = new Player();
+	public static OldStylePlayer deserialize(String position) {
+		OldStylePlayer player = new OldStylePlayer();
 		String[] parts = position.split("; ");
 		int x = Integer.parseInt(parts[0]);
 		int z = Integer.parseInt(parts[1]);

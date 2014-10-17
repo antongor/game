@@ -1,39 +1,60 @@
 package main;
-import java.io.IOException;
+
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_LINES;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_SMOOTH;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glColor4d;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glShadeModel;
+import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.util.glu.GLU.gluOrtho2D;
 
 import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.util.glu.GLU.gluOrtho2D;
+import scene.DirtNode;
+import scene.Scene;
+import world.World;
 
 public class Main {
-	public static void main(String[] args) {
+	
+	private World world;
+	private Scene scene;
+
+	public Main() {
+		this.world = new World();
+		this.scene = new Scene();
+	}
+	
+	
+	
+	private void run() {
 		createWindow();
 		setupOpenGL();
-		Player var = Player.deserialize(Save.load());
-		double angle = 0;
+		DirtNode dirt = new DirtNode();
+		scene.addRootChild(dirt);
 		while(!Display.isCloseRequested()) {
-			var.move();
 			newFrame();
-			var.draw();
-//			angle -= 0.1;
-//			glLineWidth(25);
-//			glRotated(angle, 0, 0, 1);
-			glBegin(GL_LINES);
-			glColor4d(0, 0, 0, 1);
-//			glVertex2d(0, 0);
-//			glVertex2d(0, 1000);
-			
-			glEnd();
-			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-				Save.save(var.Serialize());
-				System.exit(0);
-			}
+			scene.draw();
 		}
 	}
 
@@ -79,4 +100,10 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
+
+	public static void main(String[] args) {
+		new Main().run();
+	}
+
+
 }
