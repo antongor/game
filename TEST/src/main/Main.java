@@ -30,10 +30,6 @@ public class Main {
 	
 	
 	private void run() {
-		createWindow();
-		setupOpenGL();
-		DirtNode dirt = new DirtNode();
-		scene.addRootChild(dirt);
 		while(!Display.isCloseRequested()) {
 			newFrame();
 			scene.draw();
@@ -46,7 +42,7 @@ public class Main {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
-		gluOrtho2D(-Display.getWidth() / 2, Display.getWidth() / 2, -Display.getHeight() / 2, Display.getHeight() / 2);
+		gluOrtho2D(0, Display.getWidth(), 0, Display.getHeight());
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);

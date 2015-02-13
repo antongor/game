@@ -1,5 +1,5 @@
 package map;
 
 public enum TileType {
-	dirt
+	dirt, sand, stone
 }
